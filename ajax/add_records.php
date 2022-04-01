@@ -31,15 +31,18 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
+// print_r($records);
 
 $is_success = true;
 for ($i=0; $i < $rec_len; $i++) { 
-    $sql = "select LineId from sale_orders where LineId = " . $records[$i]['LineId'];
+    $t_rec = json_decode(json_encode($records[$i]), true);
+    $sql = "select LineId from sale_orders where LineId = " . $t_rec['LineId'];
+    // echo $sql . '<br/>';
 
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        $sql = "update Sale_orders set " . "Code=" . addslashes($records[$i]['Code']). ", Customer=" . addslashes($records[$i]['Customer']). ", Description=" . addslashes($records[$i]['Description']). ", OrdQty=" . addslashes($records[$i]['OrdQty']). ", Picker=" . addslashes($records[$i]['Picker']). ", ProcessedDate=" . addslashes($records[$i]['ProcessedDate']). ", Reference=" . addslashes($records[$i]['Reference']). ", SO=" . addslashes($records[$i]['SO']). ", Shipday=" . addslashes($records[$i]['Shipday']). ", SortCodeDescription=" . addslashes($records[$i]['SortCodeDescription']). ", createdby=" . addslashes($records[$i]['createdby']). ", value=" . addslashes($records[$i]['value']) . " where LineId = " . $records[$i]['LineId'];
+        $sql = "update Sale_orders set " . "Code='" . addslashes($t_rec['Code']). "', Customer='" . addslashes($t_rec['Customer']). "', Description='" . addslashes($t_rec['Description']). "', OrdQty='" . addslashes($t_rec['OrdQty']). "', Picker='" . addslashes($t_rec['Picker']). "', ProcessedDate='" . addslashes($t_rec['ProcessedDate']). "', Reference='" . addslashes($t_rec['Reference']). "', SO='" . addslashes($t_rec['SO']). "', Shipday='" . addslashes($t_rec['Shipday']). "', SortCodeDescription='" . addslashes($t_rec['SortCodeDescription']). "', createdby='" . addslashes($t_rec['createdby']). "', value='" . addslashes($t_rec['value']) . "' where LineId = " . $t_rec['LineId'];
     
         if ($conn->query($sql) === TRUE) {
         //   echo "New record created successfully";
@@ -48,7 +51,7 @@ for ($i=0; $i < $rec_len; $i++) {
           echo "Error: " . $sql . "<br>" . $conn->error;
         }
     } else {
-        $sql = "INSERT INTO Sale_orders (Code, Customer, Description, LineId, OrdQty, Picker, ProcessedDate, Reference, SO, Shipday, SortCodeDescription, createdby, value) VALUES ('" . addslashes($records[$i]['Code']) . "', '" . addslashes($records[$i]['Customer']) . "', '" . addslashes($records[$i]['Description']) . "', '" . addslashes($records[$i]['LineId']) . "', '" . addslashes($records[$i]['OrdQty']) . "', '" . addslashes($records[$i]['Picker']) . "', '" . addslashes($records[$i]['ProcessedDate']) . "', '" . addslashes($records[$i]['Reference']) . "', '" . addslashes($records[$i]['SO']) . "', '" . addslashes($records[$i]['Shipday']) . "', '" . addslashes($records[$i]['SortCodeDescription']) . "', '" . addslashes($records[$i]['createdby']) . "', '" . addslashes($records[$i]['value']) . "')";
+        $sql = "INSERT INTO Sale_orders (Code, Customer, Description, LineId, OrdQty, Picker, ProcessedDate, Reference, SO, Shipday, SortCodeDescription, createdby, value) VALUES ('" . addslashes($t_rec['Code']) . "', '" . addslashes($t_rec['Customer']) . "', '" . addslashes($t_rec['Description']) . "', '" . addslashes($t_rec['LineId']) . "', '" . addslashes($t_rec['OrdQty']) . "', '" . addslashes($t_rec['Picker']) . "', '" . addslashes($t_rec['ProcessedDate']) . "', '" . addslashes($t_rec['Reference']) . "', '" . addslashes($t_rec['SO']) . "', '" . addslashes($t_rec['Shipday']) . "', '" . addslashes($t_rec['SortCodeDescription']) . "', '" . addslashes($t_rec['createdby']) . "', '" . addslashes($t_rec['value']) . "')";
     
         if ($conn->query($sql) === TRUE) {
         //   echo "New record created successfully";

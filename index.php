@@ -197,9 +197,10 @@
             success: function(response) {
                 $('#notice').hide();
                 if (response == "success") {
-                    alert("Loaded successfully.");
+                    console.log("Loaded successfully.");
+                    // alert("Loaded successfully.");
                 } else {
-                    alert("some errors are caused");
+                    console.log("some errors are caused");
                 }
                 load_records();
             }
