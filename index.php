@@ -179,8 +179,10 @@
             success: function(load_result) {
                 var records = JSON.parse(load_result);
                 console.log(records);
-                $('#example').dataTable().fnClearTable();
-                $('#example').dataTable().fnAddData(records);
+                if (records.length) {
+                    $('#example').dataTable().fnClearTable();
+                    $('#example').dataTable().fnAddData(records);
+                }
             }
         });
     }
@@ -205,32 +207,6 @@
                 load_records();
             }
         });
-        // var settings = {
-        //     "url": "https://cors-anywhere.herokuapp.com/https://remote.grwills.com.au/WebAPI/API/DB/CustomQuery?key=IWS_SalesOrders",
-        //     "method": "get",
-        //     // "timeout": 0,
-        //     "headers": {
-        //         // "Access-Control-Allow-Origin": "*",
-        //         "Content-Type": "application/json",
-        //         "Authorization": "Bearer " + token_info['access_token'],
-        //     },
-        // };
-
-        // $.ajax(settings).done(function(response) {
-        //     $.ajax({
-        //         url: "./ajax/add_records.php",
-        //         method: "post",
-        //         data: {
-        //             records: response,
-        //         },
-        //         success: function(add_result) {
-        //             // console.log(add_result);
-        //             $('#notice').hide();
-        //             load_records();
-        //         }
-        //     });
-        //     // load
-        // });
     }
 
     function get_access_token() {
@@ -252,9 +228,7 @@
 
         load_records();
         get_access_token();
-        // get_access_token();
-        // order_api();
-        setInterval(get_access_token, 600000);
+        setInterval(get_access_token, 60000);
     });
     </script>
 </footer>
